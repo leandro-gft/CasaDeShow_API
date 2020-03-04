@@ -35,7 +35,7 @@ public class User {
 
 	@NotNull(message="Campo PASSWORD é de preenchimento obrigatório.")
 	@JsonInclude(Include.NON_NULL)
-    @JsonIgnore
+    
 	private String password;	
 		
 	@ManyToOne
