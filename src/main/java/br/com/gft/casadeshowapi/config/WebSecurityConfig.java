@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
@@ -64,12 +66,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable() //tipo de proteção para evitar um tipo de ataque em específico
 		
 			.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/users").permitAll()
+			.antMatchers(HttpMethod.POST, "/api/users").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/eventos").permitAll()
 			.antMatchers("/swagger-ui.html").permitAll()
-			.antMatchers(HttpMethod.POST, "/casas/**", "/eventos/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.PUT, "/casas/**", "/eventos/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.GET, "/casas/**", "/users/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.DELETE, "/casas/**", "/eventos/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.POST, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.PUT, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.GET, "/api/casas/**", "/api/users/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.DELETE, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
 			.anyRequest().authenticated() //qualquer requisição precisa esta autenticada
 			.and()
 				.httpBasic();//métood basico de autenticação
