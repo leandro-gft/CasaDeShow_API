@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.gft.casadeshowapi.domain.Compra;
+import br.com.gft.casadeshowapi.domain.Venda;
 import br.com.gft.casadeshowapi.domain.Evento;
-import br.com.gft.casadeshowapi.service.CompraService;
+import br.com.gft.casadeshowapi.service.VendaService;
 import br.com.gft.casadeshowapi.service.EventoService;
 
 
 
 @RestController
-@RequestMapping("/historico")
-public class CompraResource {
+@RequestMapping("/api/vendas")
+public class VendaResource {
 	
 	@Autowired
-	private CompraService comprasService;
+	private VendaService vendasService;
 	
 	@Autowired
 	private EventoService eventosService;
@@ -42,33 +42,31 @@ public class CompraResource {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE
 			})
-	public ResponseEntity<List<Compra>> listar() {
-		List<Compra> compras = comprasService.listar();
-		return ResponseEntity.status(HttpStatus.OK).body(compras);
+	public ResponseEntity<List<Venda>> listar() {
+		List<Venda> vendas = vendasService.listar();
+		return ResponseEntity.status(HttpStatus.OK).body(vendas);
 		
 	//	return ResponseEntity.status(HttpStatus.OK).body(autoresService.listar());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> salvar (@Valid @RequestBody Compra compra) {
-		Evento evento = eventosService.buscar(compra.getEvento().getId());
-		compra.setTotal(new BigDecimal(compra.getQtd()).multiply(evento.getValor()));
-		evento.setCapacidade(evento.getCapacidade()-compra.getQtd());
+	public ResponseEntity<Void> salvar (@Valid @RequestBody Venda venda) {
+		Evento evento = eventosService.buscar(venda.getEvento().getId());
+		venda.setTotal(new BigDecimal(venda.getQtd()).multiply(evento.getValor()));
+		evento.setCapacidade(evento.getCapacidade()-venda.getQtd());
 		
-		compra = comprasService.salvar(compra);
+		venda = vendasService.salvar(venda);
 		
 			
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(compra.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(venda.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();					
 	
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Compra> buscar(@PathVariable("id")Long id){
-//		Casa casa = casasService.buscar(id); 
-//		return ResponseEntity.status(HttpStatus.OK).body(casa);
-		return ResponseEntity.status(HttpStatus.OK).body(comprasService.buscar(id));
+	public ResponseEntity<Venda> buscar(@PathVariable("id")Long id){
+		return ResponseEntity.status(HttpStatus.OK).body(vendasService.buscar(id));
 		
 	}
 	

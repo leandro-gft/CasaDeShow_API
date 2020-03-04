@@ -26,27 +26,56 @@ import br.com.gft.casadeshowapi.domain.Evento;
 import br.com.gft.casadeshowapi.service.EventoService;
 
 @RestController
-@RequestMapping("/eventos")
+@RequestMapping("/api/eventos")
 public class EventoResource {
 
 	@Autowired
 	private EventoService eventosService;
 
-//	@GetMapping
-//	public ResponseEntity<List<Evento>> Listar() {
-//		return ResponseEntity.status(HttpStatus.OK).body(eventosService.listar());
-//	}
-	
 	@GetMapping
-	public ResponseEntity<List<Evento>> Listar() {
+	public ResponseEntity<List<Evento>> Listar() { 
 		return ResponseEntity.status(HttpStatus.OK).body(eventosService.listar());
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<List<Evento>> pesquisar() {
-//		return ResponseEntity.status(HttpStatus.OK).body(eventosService.listar());
-//	}
+	@GetMapping("/nome/asc")
+	public ResponseEntity<List<Evento>> ListarAsc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.listarAsc());
+	}
 	
+	@GetMapping("/nome/desc")
+	public ResponseEntity<List<Evento>> ListarDesc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.listarDesc());
+	}
+	
+	@GetMapping("/capacidade/asc")
+	public ResponseEntity<List<Evento>> capacidadeAsc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.capacidadeAsc());
+	}
+	
+	@GetMapping("/capacidade/desc")
+	public ResponseEntity<List<Evento>> capacidadeDesc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.capacidadeDesc());
+	}
+	
+	@GetMapping("/data/asc")
+	public ResponseEntity<List<Evento>> dataAsc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.dataAsc());
+	}
+	
+	@GetMapping("/data/desc")
+	public ResponseEntity<List<Evento>> dataDesc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.dataDesc());
+	}
+	
+	@GetMapping("/preco/asc")
+	public ResponseEntity<List<Evento>> precoAsc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.precoAsc());
+	}
+	
+	@GetMapping("/preco/desc")
+	public ResponseEntity<List<Evento>> precoDesc() { 
+		return ResponseEntity.status(HttpStatus.OK).body(eventosService.precoDesc());
+	}
 	
 	@PostMapping
 	public ResponseEntity<Void> salvar(@Valid @RequestBody Evento evento) { // @RequestBody pega as informações da requisição e

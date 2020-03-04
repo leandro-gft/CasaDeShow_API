@@ -3,14 +3,13 @@ package br.com.gft.casadeshowapi.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.gft.casadeshowapi.domain.User;
 import br.com.gft.casadeshowapi.repository.UserRepository;
-import br.com.gft.casadeshowapi.service.exceptions.UserNaoEncontradoException;
 import br.com.gft.casadeshowapi.service.exceptions.UsuarioExistenteException;
+import br.com.gft.casadeshowapi.service.exceptions.UsuarioNaoEncontradoException;
 
 
 @Service
@@ -44,28 +43,11 @@ public class UserService {
 		User user = usersRepository.findById(id).orElse(null);
 		
 		if(user ==null) {
-			throw new UserNaoEncontradoException("Esse usuário não pôde ser encontrado.");
+			throw new UsuarioNaoEncontradoException("Esse usuário não pôde ser encontrado.");
 			
 		}
 		return user;		
 	}
-
-	public void deletar(Long id) {
-
-		try {
-			usersRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new UserNaoEncontradoException("Esse usuário não pôde ser encontrado.");
-		}
-	}
-
-	public void atualizar(User user) {
-		verificarExistencia(user);
-		usersRepository.save(user);
-	}
-
-	private void verificarExistencia(User user) {
-		buscar(user.getId());
-	}
+	
 		
 }

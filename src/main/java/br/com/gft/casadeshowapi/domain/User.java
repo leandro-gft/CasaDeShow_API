@@ -35,6 +35,7 @@ public class User {
 
 	@NotNull(message="Campo PASSWORD é de preenchimento obrigatório.")
 	@JsonInclude(Include.NON_NULL)
+    @JsonIgnore
 	private String password;	
 		
 	@ManyToOne
@@ -49,12 +50,12 @@ public class User {
 	}
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)	
     @JsonIgnore
-    private List<Compra> compra;
+    private List<Venda> compra;
 	
-    public List<Compra> getCompra() {
+    public List<Venda> getCompra() {
 		return compra;
 	}
-	public void setCompra(List<Compra> compra) {
+	public void setCompra(List<Venda> compra) {
 		this.compra = compra;
 	}
 	public long getId() {

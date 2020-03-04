@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.gft.casadeshowapi.domain.Casa;
@@ -20,7 +21,16 @@ public class CasaService {
 	
 	public List<Casa> listar() {
 		return casasRepository.findAll();
-
+	}
+	
+	public List<Casa> listarasc() {
+		Sort sort = Sort.by("nomeCasa").ascending();
+		return casasRepository.findAll(sort);
+	}
+	
+	public List<Casa> listardesc() {
+		Sort sort = Sort.by("nomeCasa").descending();
+		return casasRepository.findAll(sort);
 	}
 	
 	public Casa salvar(Casa casa) {
@@ -37,6 +47,16 @@ public class CasaService {
 	
 	public Casa buscar(Long id) {
 		Casa casa = casasRepository.findById(id).orElse(null);
+		
+		if(casa ==null) {
+			throw new CasaNaoEncontradaException("Essa casa não pôde ser encontrado.");
+			
+		}
+		return casa;		
+	}
+	
+	public Casa buscarPorNome(String nomeCasa) {
+		Casa casa = casasRepository.findByNomeCasa(nomeCasa);
 		
 		if(casa ==null) {
 			throw new CasaNaoEncontradaException("Essa casa não pôde ser encontrado.");

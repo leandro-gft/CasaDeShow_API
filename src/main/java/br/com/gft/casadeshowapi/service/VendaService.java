@@ -8,33 +8,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import br.com.gft.casadeshowapi.domain.Compra;
+import br.com.gft.casadeshowapi.domain.Venda;
 import br.com.gft.casadeshowapi.domain.User;
-import br.com.gft.casadeshowapi.repository.CompraRepository;
+import br.com.gft.casadeshowapi.repository.VendaRepository;
 import br.com.gft.casadeshowapi.repository.UserRepository;
 import br.com.gft.casadeshowapi.service.exceptions.CompraExistenteException;
 import br.com.gft.casadeshowapi.service.exceptions.CompraNaoEncontradaException;
 
 @Service
-public class CompraService {
+public class VendaService {
 
 	@Autowired
-	private CompraRepository comprasRepository;
+	private VendaRepository vendasRepository;
 	
 	@Autowired // injeção de dependencia
 	private UserRepository usersRepository;
 	
 	
-	public List<Compra> listar() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = usersRepository.findByUsername(auth.getName());
-		return comprasRepository.findByUser(user);
+	public List<Venda> listar() {
+		return vendasRepository.findAll();
 
 	}
 	
-	public Compra salvar(Compra compra) {
-		if (compra.getId() !=null) {
-			Compra a  = comprasRepository.findById(compra.getId()).orElse(null);
+	public Venda salvar(Venda venda) {
+		if (venda.getId() !=null) {
+			Venda a  = vendasRepository.findById(venda.getId()).orElse(null);
 			
 			if (a != null) //se a for diferente de null, significa que foi encontrado no banco, ou seja, já existe
 				{
@@ -43,20 +41,20 @@ public class CompraService {
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = usersRepository.findByUsername(auth.getName());
-		compra.setUser(user);
-		compra.setDataCompra(Calendar.getInstance().getTime());
-		return comprasRepository.save(compra);
+		venda.setUser(user);
+		venda.setDataCompra(Calendar.getInstance().getTime());
+		return vendasRepository.save(venda);
 	}
 	
 	
-	public Compra buscar(Long id) {
-		Compra compra = comprasRepository.findById(id).orElse(null);
+	public Venda buscar(Long id) {
+		Venda venda = vendasRepository.findById(id).orElse(null);
 		
-		if(compra ==null) {
+		if(venda ==null) {
 			throw new CompraNaoEncontradaException("Essa compra não pôde ser encontrado.");
 			
 		}
-		return compra;		
+		return venda;		
 	}
 	
 }

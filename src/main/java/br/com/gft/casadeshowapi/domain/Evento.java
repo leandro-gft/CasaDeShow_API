@@ -1,7 +1,7 @@
 package br.com.gft.casadeshowapi.domain;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,11 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -34,24 +36,19 @@ public class Evento {
 	@NotNull(message="Campo GÊNERO é de preenchimento obrigatório.")
 	private Genero genero;
 	
-	@JsonFilter(value = "nomeEvento")
 	@JsonInclude(Include.NON_NULL)
 	@NotNull(message="Campo NOME DO EVENTO é de preenchimento obrigatório.")
 	private String nomeEvento;
 	
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-	public void setCompra(List<Compra> compra) {
-		this.compra = compra;
-	}
 	@JsonInclude(Include.NON_NULL)
 	@NotNull(message="Campo CAPACIDADE é de preenchimento obrigatório.")
 	private Integer capacidade;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE) //Apenas data, sem hora e minuto
 	@NotNull(message="Campo DATA é de preenchimento obrigatório.")
-	private LocalDate data;
+	private Date data;
 	
 	@JsonInclude(Include.NON_NULL)
 	@NumberFormat(pattern="#,##0.00")
@@ -63,12 +60,12 @@ public class Evento {
 	private Casa casa;
 	
 	@OneToMany(mappedBy="evento", cascade=javax.persistence.CascadeType.ALL) 
-	List<Compra> compra;
+	private List<Venda> compra;
 	@JsonIgnore
-	public List<Compra> getCompra() {
+	public List<Venda> getCompra() {
 		return compra;
 	}
-	public void setCarrinho(List<Compra> compra) {
+	public void setCarrinho(List<Venda> compra) {
 		this.compra = compra;
 	}
 	public Casa getCasa() {
@@ -90,6 +87,12 @@ public class Evento {
 	}
 	public void setCapacidade(Integer capacidade) {
 		this.capacidade = capacidade;
+	}
+	public Date getData() {
+		return data;
+	}
+	public void setData(Date data) {
+		this.data = data;
 	}
 	public BigDecimal getValor() {
 		return valor;

@@ -14,7 +14,8 @@ import br.com.gft.casadeshowapi.service.exceptions.CasaNaoEncontradaException;
 import br.com.gft.casadeshowapi.service.exceptions.CompraExistenteException;
 import br.com.gft.casadeshowapi.service.exceptions.CompraNaoEncontradaException;
 import br.com.gft.casadeshowapi.service.exceptions.EventoNaoEncontradoException;
-import br.com.gft.casadeshowapi.service.exceptions.UserNaoEncontradoException;
+
+import br.com.gft.casadeshowapi.service.exceptions.UsuarioNaoEncontradoException;
 import br.com.gft.casadeshowapi.service.exceptions.UsuarioExistenteException;
 
 @ControllerAdvice
@@ -69,6 +70,19 @@ public class ResourceExceptionHandler {
 	return ResponseEntity.status(HttpStatus.CONFLICT ).body(erro);
 	}
 	
+	
+	@ExceptionHandler(UsuarioNaoEncontradoException.class) //captura qualquer lugar que chame essa classe 
+	public ResponseEntity<DetalhesErro> handleUsuarioNaoEncontradoException(UsuarioNaoEncontradoException e, HttpServletRequest request) {
+		
+		DetalhesErro erro = new DetalhesErro();
+		erro.setStatus(404l);
+		erro.setTitulo("O usuario não pôde ser encontrado!");
+		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/404");
+		erro.setTimestamp(System.currentTimeMillis());					
+		
+	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	
 	@ExceptionHandler(CompraExistenteException.class) //captura qualquer lugar que chame essa classe 
 	public ResponseEntity<DetalhesErro> handleCompraExistenteException(CompraExistenteException e, HttpServletRequest request) {
 		
@@ -103,19 +117,6 @@ public class ResourceExceptionHandler {
 		erro.setTimestamp(System.currentTimeMillis());					
 		
 	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
-	}
-	
-		
-	@ExceptionHandler(UserNaoEncontradoException.class) //captura qualquer lugar que chame essa classe 
-	public ResponseEntity<DetalhesErro> handleUserNaoEncontradoException(UserNaoEncontradoException e, HttpServletRequest request) {
-		
-		DetalhesErro erro = new DetalhesErro();
-		erro.setStatus(404l);
-		erro.setTitulo("O usuário não pôde ser encontrado!");
-		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/404");
-		erro.setTimestamp(System.currentTimeMillis());					
-		
-	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
 	
 }

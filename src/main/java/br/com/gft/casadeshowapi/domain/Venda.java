@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-public class Compra {
+public class Venda {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonInclude(Include.NON_NULL)
@@ -86,7 +86,7 @@ public class Compra {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Compra other = (Compra) obj;
+		Venda other = (Venda) obj;
 		if (id != other.id)
 			return false;
 		return true;

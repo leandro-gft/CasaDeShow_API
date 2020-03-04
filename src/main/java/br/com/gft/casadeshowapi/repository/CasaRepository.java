@@ -7,6 +7,7 @@ import br.com.gft.casadeshowapi.domain.Casa;
 
 public interface CasaRepository extends JpaRepository<Casa, Long> {
 
-	   
+	Casa findByNomeCasa(String nomeCasa);
+
 	
 }

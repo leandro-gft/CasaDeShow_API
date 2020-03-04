@@ -64,7 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable() //tipo de proteção para evitar um tipo de ataque em específico
 		
 			.authorizeRequests()
-			.antMatchers("/users").permitAll()
+			.antMatchers(HttpMethod.POST, "/users").permitAll()
+			.antMatchers("/swagger-ui.html").permitAll()
 			.antMatchers(HttpMethod.POST, "/casas/**", "/eventos/**").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.PUT, "/casas/**", "/eventos/**").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET, "/casas/**", "/users/**").hasAuthority("ADMIN")

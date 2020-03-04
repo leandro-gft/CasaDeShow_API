@@ -13,26 +13,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.swagger.annotations.ApiModelProperty;
 
+//@ApiModel(value="Casa", description="Representa uma casa de show")
 @Entity
 public class Casa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonInclude(Include.NON_NULL)
+	@ApiModelProperty(value="ID da casa de show",example="1")
 	private Long id;
 	
+	@ApiModelProperty(value="Nome da casa de show",example="Teatro Municipal")
 	@JsonInclude(Include.NON_NULL)
 	@NotNull(message="Campo NOME DA CASA DE SHOW é de preenchimento obrigatório.")
 	private String nomeCasa;
 	
+	@ApiModelProperty(value="Endereço da casa de show",example="Barueri")
 	@JsonInclude(Include.NON_NULL)
 	@NotNull(message="Campo LOCAL DA CASA DE SHOW é de preenchimento obrigatório.")
 	private String localCasa;
-	
-	@JsonInclude(Include.NON_EMPTY)
-	@OneToMany(mappedBy="casa")
-	private List<Comentario> comentarios;
 	
 	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany(mappedBy="casa", cascade=javax.persistence.CascadeType.ALL) 
