@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -22,14 +24,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Venda {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonInclude(Include.NON_NULL)
 	private Long id;
 	
 	@ManyToOne
+	@NotNull
 	private Evento evento;
 	
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo QUANTIDADE é de preenchimento obrigatório.")
+	@NotNull
+	@Positive	
 	private int qtd;
 	
 	@ManyToOne
@@ -37,7 +39,6 @@ public class Venda {
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@JsonInclude(Include.NON_NULL)
 	private Date dataCompra;
 	
 	public Date getDataCompra() {
@@ -48,7 +49,6 @@ public class Venda {
 	}
 	
 	@NumberFormat(pattern="#,##0.00")
-	@JsonInclude(Include.NON_NULL)
 	private BigDecimal total;
 
 	public int getQtd() {

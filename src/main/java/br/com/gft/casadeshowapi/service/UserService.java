@@ -3,6 +3,7 @@ package br.com.gft.casadeshowapi.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,7 @@ public class UserService {
 		User user = usersRepository.findById(id).orElse(null);
 		
 		if(user ==null) {
-			throw new UsuarioNaoEncontradoException("Esse usuário não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException(1);
 			
 		}
 		return user;		

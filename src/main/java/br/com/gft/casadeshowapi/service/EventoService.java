@@ -65,7 +65,7 @@ public class EventoService {
 		Evento evento = eventosRepository.findById(id).orElse(null);
 
 		if (evento == null) {
-			throw new EventoNaoEncontradoException("O evento não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException(1);
 
 		}
 
@@ -82,7 +82,7 @@ public class EventoService {
 		try {
 			eventosRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EventoNaoEncontradoException("O evento não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException(1);
 		}
 	}
 

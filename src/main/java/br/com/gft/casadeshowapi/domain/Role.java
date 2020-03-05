@@ -16,11 +16,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonInclude(Include.NON_NULL)
     private Long id;
-
-    @JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo NAME é de preenchimento obrigatório.")
     private String name;
     
     @OneToMany(mappedBy = "role")

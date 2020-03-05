@@ -13,10 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
 @Entity 
@@ -25,18 +24,16 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonInclude(Include.NON_NULL)
 	private long id;
 	
 	@Column(unique=true)
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo USERNAME é de preenchimento obrigatório.")
+	@NotNull
+	@Size(min=3, max=20)
 	private String username;
 
-	@NotNull(message="Campo PASSWORD é de preenchimento obrigatório.")
-	@JsonInclude(Include.NON_NULL)
-    
-	private String password;	
+	@NotNull
+	@Size(min=3)
+ 	private String password;	
 		
 	@ManyToOne
 	private Role role;

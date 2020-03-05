@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -21,21 +22,19 @@ public class Casa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonInclude(Include.NON_NULL)
 	@ApiModelProperty(value="ID da casa de show",example="1")
 	private Long id;
 	
 	@ApiModelProperty(value="Nome da casa de show",example="Teatro Municipal")
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo NOME DA CASA DE SHOW é de preenchimento obrigatório.")
+	@NotNull
+	@Size(min=3, max=30)
 	private String nomeCasa;
 	
 	@ApiModelProperty(value="Endereço da casa de show",example="Barueri")
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo LOCAL DA CASA DE SHOW é de preenchimento obrigatório.")
+	@NotNull
+	@Size(min=3, max=50)
 	private String localCasa;
 	
-	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany(mappedBy="casa", cascade=javax.persistence.CascadeType.ALL) 
 	@JsonIgnore
 	private List<Evento> evento;

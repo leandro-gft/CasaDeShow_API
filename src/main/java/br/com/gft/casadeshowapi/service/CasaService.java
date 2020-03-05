@@ -1,5 +1,6 @@
 package br.com.gft.casadeshowapi.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,10 @@ public class CasaService {
 	}
 	
 	public Casa salvar(Casa casa) {
-		if (casa.getId() !=null) {
+		if (casa.getId() !=null && casa.getNomeCasa() !=null ) {
 			Casa a  = casasRepository.findById(casa.getId()).orElse(null);
-			
-			if (a != null) //se a for diferente de null, significa que foi encontrado no banco, ou seja, já existe
+			Casa b = casasRepository.findByNomeCasa(casa.getNomeCasa());
+			if (a  != null || b != null ) //se a for diferente de null, significa que foi encontrado no banco, ou seja, já existe
 				{
 				throw new CasaExistenteException("Essa casa já existe.");				
 			}			
@@ -49,7 +50,7 @@ public class CasaService {
 		Casa casa = casasRepository.findById(id).orElse(null);
 		
 		if(casa ==null) {
-			throw new CasaNaoEncontradaException("Essa casa não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException(1);
 			
 		}
 		return casa;		
@@ -59,7 +60,7 @@ public class CasaService {
 		Casa casa = casasRepository.findByNomeCasa(nomeCasa);
 		
 		if(casa ==null) {
-			throw new CasaNaoEncontradaException("Essa casa não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException(1);
 			
 		}
 		return casa;		

@@ -14,7 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -28,35 +31,32 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Evento {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonInclude(Include.NON_NULL)
 	private Long id;
 	
-	@JsonInclude(Include.NON_NULL)
 	@Enumerated(EnumType.STRING)
-	@NotNull(message="Campo GÊNERO é de preenchimento obrigatório.")
+	@NotNull
 	private Genero genero;
 	
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo NOME DO EVENTO é de preenchimento obrigatório.")
+	@NotNull
+	@Size(min=3, max=30)
 	private String nomeEvento;
 	
-	@JsonInclude(Include.NON_NULL)
-	@NotNull(message="Campo CAPACIDADE é de preenchimento obrigatório.")
+	@NotNull
+	@Positive
 	private Integer capacidade;
 	
-	@JsonInclude(Include.NON_NULL)
 	@JsonFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE) //Apenas data, sem hora e minuto
-	@NotNull(message="Campo DATA é de preenchimento obrigatório.")
+	@NotNull
+	@Future
 	private Date data;
 	
-	@JsonInclude(Include.NON_NULL)
 	@NumberFormat(pattern="#,##0.00")
-	@NotNull(message="Campo VALOR é de preenchimento obrigatório.")
+	@NotNull
 	private BigDecimal valor;
 	
-	@JsonInclude(Include.NON_NULL)
 	@ManyToOne
+	@NotNull
 	private Casa casa;
 	
 	@OneToMany(mappedBy="evento", cascade=javax.persistence.CascadeType.ALL) 
