@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.gft.casadeshowapi.domain.User;
 import br.com.gft.casadeshowapi.service.UserService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,11 +27,13 @@ public class UserResource {
 	@Autowired
 	private UserService usersService;
 	 
+	@ApiOperation("Lista os usuários cadastrados.")
 	@GetMapping
 	public ResponseEntity<List<User>> Listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(usersService.listar());
 	}
 	
+	@ApiOperation("Cadastra um novo usuário.")
 	@PostMapping
 	public ResponseEntity<Void> salvar(@Valid @RequestBody User user) { // @RequestBody pega as informações da requisição e
 																	// coloca no objeto livro
@@ -44,6 +47,7 @@ public class UserResource {
 													// informações sobre esse recurso)
 	}
 	
+	@ApiOperation("Busca um usuário de acordo com seu id.")
 	@GetMapping("/{id}")
 	public ResponseEntity<User> buscar(@PathVariable("id")Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(usersService.buscar(id));

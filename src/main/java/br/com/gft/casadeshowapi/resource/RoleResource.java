@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.gft.casadeshowapi.domain.Role;
 import br.com.gft.casadeshowapi.service.RoleService;
+import io.swagger.annotations.ApiOperation;
 
 
 @RestController
@@ -27,12 +28,12 @@ public class RoleResource {
 	@Autowired
 	private RoleService rolesService;
 	
-	 
+	@ApiOperation("Lista os tipos de permissões cadastradas.")
 	@GetMapping
 	public ResponseEntity<List<Role>> Listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(rolesService.listar());
 	}
-	
+	@ApiOperation("Busca um tipo de permissão de acordo com seu id.")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable("id") Long id) { // ResponseEntity é responsavel por encapsular o
 																	// objeto de retorno (no caso livro) e manipular
@@ -44,7 +45,7 @@ public class RoleResource {
 	}
 	
 	
-	
+	@ApiOperation("Cadastra um novo tipo de permissão.")
 	@PostMapping
 	public ResponseEntity<Void> salvar(@Valid @RequestBody Role role) { // @RequestBody pega as informações da requisição e
 																	// coloca no objeto livro

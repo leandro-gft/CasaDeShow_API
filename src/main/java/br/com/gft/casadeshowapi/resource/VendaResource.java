@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.gft.casadeshowapi.domain.Venda;
 import br.com.gft.casadeshowapi.domain.Evento;
 import br.com.gft.casadeshowapi.service.VendaService;
+import io.swagger.annotations.ApiOperation;
 import br.com.gft.casadeshowapi.service.EventoService;
 
 
@@ -35,7 +36,8 @@ public class VendaResource {
 	
 	@Autowired
 	private EventoService eventosService;
-	
+
+	@ApiOperation("Lista as vendas registradas de acordo com o usuário que realizou a compra.")
 	@RequestMapping(
 			method = RequestMethod.GET,
 			produces = {
@@ -49,6 +51,7 @@ public class VendaResource {
 	//	return ResponseEntity.status(HttpStatus.OK).body(autoresService.listar());
 	}
 	
+	@ApiOperation("Registra uma nova venda e subtrai o número de ingresso vendidos da capacidade do evento.")
 	@PostMapping
 	public ResponseEntity<Void> salvar (@Valid @RequestBody Venda venda) {
 		Evento evento = eventosService.buscar(venda.getEvento().getId());
@@ -63,7 +66,7 @@ public class VendaResource {
 		return ResponseEntity.created(uri).build();					
 	
 	}
-	
+	@ApiOperation("Busca uma venda de acordo com seu id.")
 	@GetMapping("/{id}")
 	public ResponseEntity<Venda> buscar(@PathVariable("id")Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(vendasService.buscar(id));

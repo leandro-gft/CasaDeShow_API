@@ -34,7 +34,7 @@ public class CasaResource {
 	@Autowired
 	private CasaService casasService;
 	
-	@ApiOperation("Lista as casas de show cadastradas")
+	@ApiOperation("Lista as casas de show cadastradas.")
 	@RequestMapping(
 			method = RequestMethod.GET,
 			produces = {
@@ -48,7 +48,7 @@ public class CasaResource {
 	//	return ResponseEntity.status(HttpStatus.OK).body(autoresService.listar());
 	}
 	
-	@ApiOperation("Lista as casas de show cadastradas em ordem crescente")
+	@ApiOperation("Lista as casas de show cadastradas em ordem crescente.")
 	@RequestMapping(
 			value="/asc", method = RequestMethod.GET)
 	public ResponseEntity<List<Casa>> listarasc() {
@@ -56,7 +56,7 @@ public class CasaResource {
 		return ResponseEntity.status(HttpStatus.OK).body(casas);		
 	}
 	
-	@ApiOperation("Lista as casas de show cadastradas em ordem decrescente")
+	@ApiOperation("Lista as casas de show cadastradas em ordem decrescente.")
 	@RequestMapping(value="/desc",
 			method = RequestMethod.GET)
 	public ResponseEntity<List<Casa>> listardesc() {
@@ -64,7 +64,7 @@ public class CasaResource {
 		return ResponseEntity.status(HttpStatus.OK).body(casas);
 	}
 	
-	@ApiOperation("Cadastra uma nova casa de show")
+	@ApiOperation("Cadastra uma nova casa de show.")
 	@PostMapping
 	public ResponseEntity<Void> salvar (@ApiParam(name="corpo", value="Representação de uma nova casa de show.") @Valid @RequestBody Casa casa) {
 		casa = casasService.salvar(casa);
@@ -75,7 +75,7 @@ public class CasaResource {
 	
 	}
 	
-	@ApiOperation("Busca uma casa de show de acordo com seu id")
+	@ApiOperation("Busca uma casa de show de acordo com seu id.")
 	@GetMapping("/{id}")
 	public ResponseEntity<Casa> buscar(@ApiParam(value="ID de uma casa de show", example="1") @PathVariable("id")Long id){
 //		Casa casa = casasService.buscar(id); 
@@ -84,7 +84,7 @@ public class CasaResource {
 		
 	}
 	
-	@ApiOperation("Busca uma casa de show de acordo com seu nome")
+	@ApiOperation("Busca uma casa de show de acordo com seu nome.")
 	@GetMapping("/nome/{nomeCasa}")
 	public ResponseEntity<Casa> buscarPorNome(@ApiParam(value="Nome de uma casa de show", example="Teatro") @PathVariable("nomeCasa")String nomeCasa){
 //		Casa casa = casasService.buscar(id); 
@@ -93,7 +93,7 @@ public class CasaResource {
 		
 	}
 	
-	@ApiOperation("Deleta uma casa de show de acordo com seu id")
+	@ApiOperation("Deleta uma casa de show de acordo com seu id.")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@ApiParam(value="ID de uma casa de show", example="1") @PathVariable("id") Long id) {
 		/*
@@ -107,7 +107,7 @@ public class CasaResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation("Atualiza as informações sobre uma casa de show ja cadastrada")
+	@ApiOperation("Atualiza as informações sobre uma casa de show já cadastrada.")
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> atualizar(@ApiParam(value="ID de uma casa de show", example="1") @RequestBody Casa casa, @PathVariable("id") Long id) {
 		casa.setId(id);
