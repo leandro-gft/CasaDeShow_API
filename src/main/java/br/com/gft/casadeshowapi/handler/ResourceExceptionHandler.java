@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.RollbackException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -144,4 +145,13 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
+	@ExceptionHandler({RollbackException.class}) // captura qualquer lugar que chame essa classe
+	public ResponseEntity<Object> handleRollbackException(RollbackException ex,
+			WebRequest request) {
+		String mensagemUsuario = messageSource.getMessage("requisicao.invalida", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ExceptionUtils.getRootCauseMessage(ex);
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+	
 }
