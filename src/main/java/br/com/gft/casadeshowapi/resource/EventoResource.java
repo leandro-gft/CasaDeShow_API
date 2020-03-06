@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.gft.casadeshowapi.domain.Evento;
 import br.com.gft.casadeshowapi.service.EventoService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/eventos")
@@ -81,7 +82,7 @@ public class EventoResource {
 	}
 	@ApiOperation("Cadastra um novo evento.")
 	@PostMapping
-	public ResponseEntity<Void> salvar(@Valid @RequestBody Evento evento) { // @RequestBody pega as informações da requisição e
+	public ResponseEntity<Void> salvar(@ApiParam(name="corpo", value="Representação de um novo evento.") @Valid @RequestBody Evento evento) { // @RequestBody pega as informações da requisição e
 																	// coloca no objeto livro
 		evento = eventosService.salvar(evento);
 
@@ -94,7 +95,7 @@ public class EventoResource {
 	}
 	@ApiOperation("Busca um evento de acordo com seu id.")
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscar(@PathVariable("id") Long id) { // ResponseEntity é responsavel por encapsular o
+	public ResponseEntity<?> buscar(@ApiParam(value="ID de um evento", example="1")@PathVariable("id") Long id) { // ResponseEntity é responsavel por encapsular o
 																	// objeto de retorno (no caso livro) e manipular
 																	// informações do HTTP. A '?' significa que pode
 																	// manipular qualqeur tipo de objeto
@@ -105,7 +106,7 @@ public class EventoResource {
 	}
 	@ApiOperation("Deleta um evento de acordo com seu id.")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+	public ResponseEntity<Void> deletar(@ApiParam(value="ID de um evento", example="1") @PathVariable("id") Long id) {
 		/*
 		 * Livro livro = livros.findById(id).orElse(null); if(livro == null) { return
 		 * ResponseEntity.notFound().build(); //retorna um 404, senão retorna um 200 OK
@@ -118,7 +119,7 @@ public class EventoResource {
 	}
 	@ApiOperation("Atualiza as informações sobre um evento já cadastrado.")
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizar(@RequestBody Evento evento, @PathVariable("id") Long id) {
+	public ResponseEntity<Void> atualizar(@ApiParam(value="ID de um evento", example="1") @RequestBody Evento evento, @PathVariable("id") Long id) {
 		evento.setId(id);
 		eventosService.atualizar(evento);
 		return ResponseEntity.noContent().build();

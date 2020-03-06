@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.gft.casadeshowapi.domain.User;
 import br.com.gft.casadeshowapi.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/users")
@@ -35,7 +36,7 @@ public class UserResource {
 	
 	@ApiOperation("Cadastra um novo usuário.")
 	@PostMapping
-	public ResponseEntity<Void> salvar(@Valid @RequestBody User user) { // @RequestBody pega as informações da requisição e
+	public ResponseEntity<Void> salvar(@ApiParam(name="corpo", value="Representação de um novo usuário.") @Valid @RequestBody User user) { // @RequestBody pega as informações da requisição e
 																	// coloca no objeto livro
 		user = usersService.salvar(user);
 
@@ -49,7 +50,7 @@ public class UserResource {
 	
 	@ApiOperation("Busca um usuário de acordo com seu id.")
 	@GetMapping("/{id}")
-	public ResponseEntity<User> buscar(@PathVariable("id")Long id){
+	public ResponseEntity<User> buscar(@ApiParam(value="ID de um evento", example="1") @PathVariable("id")Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(usersService.buscar(id));
 		
 	}

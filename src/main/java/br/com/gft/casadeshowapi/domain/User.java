@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity 
 @Table(name="users", uniqueConstraints=@UniqueConstraint(columnNames= {"username"}))
@@ -24,18 +26,22 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="ID de um usuário",example="1")
 	private long id;
 	
 	@Column(unique=true)
 	@NotNull
 	@Size(min=3, max=20)
+	@ApiModelProperty(value="Nome de usuário",example="leandro123")
 	private String username;
 
 	@NotNull
 	@Size(min=3)
+	@ApiModelProperty(value="Senha do usuário",example="j@v@123")
  	private String password;	
 		
 	@ManyToOne
+	@ApiModelProperty(value="Permissão concedida a esse usuário",example="'role':{'id':'1'}")
 	private Role role;
 	
 
@@ -67,6 +73,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

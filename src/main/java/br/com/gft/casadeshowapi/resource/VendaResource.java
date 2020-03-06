@@ -23,6 +23,7 @@ import br.com.gft.casadeshowapi.domain.Venda;
 import br.com.gft.casadeshowapi.domain.Evento;
 import br.com.gft.casadeshowapi.service.VendaService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import br.com.gft.casadeshowapi.service.EventoService;
 
 
@@ -53,7 +54,7 @@ public class VendaResource {
 	
 	@ApiOperation("Registra uma nova venda e subtrai o número de ingresso vendidos da capacidade do evento.")
 	@PostMapping
-	public ResponseEntity<Void> salvar (@Valid @RequestBody Venda venda) {
+	public ResponseEntity<Void> salvar (@ApiParam(name="corpo", value="Representação de uma nova venda registrada.") @Valid @RequestBody Venda venda) {
 		Evento evento = eventosService.buscar(venda.getEvento().getId());
 		venda.setTotal(new BigDecimal(venda.getQtd()).multiply(evento.getValor()));
 		evento.setCapacidade(evento.getCapacidade()-venda.getQtd());
@@ -68,7 +69,7 @@ public class VendaResource {
 	}
 	@ApiOperation("Busca uma venda de acordo com seu id.")
 	@GetMapping("/{id}")
-	public ResponseEntity<Venda> buscar(@PathVariable("id")Long id){
+	public ResponseEntity<Venda> buscar(@ApiParam(value="ID de um evento", example="1") @PathVariable("id")Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(vendasService.buscar(id));
 		
 	}

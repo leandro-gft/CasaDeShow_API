@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -26,37 +27,47 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 public class Evento {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="ID de um evento",example="1")
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
+	@ApiModelProperty(value="Gênero do evento",example="POP")
 	private Genero genero;
 	
 	@NotNull
 	@Size(min=3, max=30)
+	@ApiModelProperty(value="Nome do Evento",example="Show do Queen")
 	private String nomeEvento;
 	
 	@NotNull
 	@Positive
+	@ApiModelProperty(value="Quantidade máxima de pessoas que cabem no evento",example="1000")
 	private Integer capacidade;
 	
 	@JsonFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE) //Apenas data, sem hora e minuto
 	@NotNull
 	@Future
+	@ApiModelProperty(value="Data em que acontecerá o evento",example="02/02/2022")
 	private Date data;
 	
 	@NumberFormat(pattern="#,##0.00")
 	@NotNull
+	@ApiModelProperty(value="Preço do ingresso",example="100.00")
 	private BigDecimal valor;
 	
 	@ManyToOne
 	@NotNull
+	@ApiModelProperty(value="Casa de show onde acontecerá o evento",example="'casa':{'id':'1'}")
 	private Casa casa;
 	
 	@OneToMany(mappedBy="evento", cascade=javax.persistence.CascadeType.ALL) 

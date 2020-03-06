@@ -20,25 +20,33 @@ import org.springframework.format.annotation.NumberFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Venda {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="ID de uma venda",example="1")
 	private Long id;
 	
 	@ManyToOne
 	@NotNull
+	@ApiModelProperty(value="Evento que deseja comprar",example="'evento':{'id':'1'}")
 	private Evento evento;
 	
 	@NotNull
 	@Positive	
+	@ApiModelProperty(value="Quantidade de ingressos comprados",example="5")
 	private int qtd;
 	
 	@ManyToOne
+	@ApiModelProperty(value="Usuário que realizou a compra")
    	public User user;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
+	
 	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value="Data em que a compra foi realizada")
 	private Date dataCompra;
 	
 	public Date getDataCompra() {
