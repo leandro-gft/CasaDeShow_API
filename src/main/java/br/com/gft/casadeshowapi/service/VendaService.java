@@ -1,5 +1,7 @@
 package br.com.gft.casadeshowapi.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class VendaService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = usersRepository.findByUsername(auth.getName());
 		venda.setUser(user);
-		venda.setDataCompra(Calendar.getInstance().getTime());
+		venda.setDataVenda(LocalDateTime.now());
 		return vendasRepository.save(venda);
 	}
 	

@@ -1,24 +1,19 @@
 package br.com.gft.casadeshowapi.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -43,19 +38,16 @@ public class Venda {
 	@ApiModelProperty(value="Usuário que realizou a compra")
    	public User user;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	
-	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@ApiModelProperty(value="Data em que a compra foi realizada")
-	private Date dataCompra;
-	
-	public Date getDataCompra() {
-		return dataCompra;
+	private LocalDateTime dataVenda;
+		
+	public LocalDateTime getDataVenda() {
+		return dataVenda;
 	}
-	public void setDataCompra(Date dataCompra) {
-		this.dataCompra = dataCompra;
+	public void setDataVenda(LocalDateTime dataVenda) {
+		this.dataVenda = dataVenda;
 	}
-	
 	@NumberFormat(pattern="#,##0.00")
 	private BigDecimal total;
 

@@ -1,7 +1,7 @@
 package br.com.gft.casadeshowapi.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,20 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -53,12 +48,10 @@ public class Evento {
 	private Integer capacidade;
 	
 	@JsonFormat(pattern="dd/MM/yyyy")
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE) //Apenas data, sem hora e minuto
 	@NotNull
 	@Future
 	@ApiModelProperty(value="Data em que acontecerá o evento",example="02/02/2022")
-	private Date data;
+	private LocalDate data;
 	
 	@NumberFormat(pattern="#,##0.00")
 	@NotNull
@@ -71,14 +64,22 @@ public class Evento {
 	private Casa casa;
 	
 	@OneToMany(mappedBy="evento", cascade=javax.persistence.CascadeType.ALL) 
-	private List<Venda> compra;
+	private List<Venda> venda;
 	@JsonIgnore
-	public List<Venda> getCompra() {
-		return compra;
+	public List<Venda> getVenda() {
+		return venda;
 	}
-	public void setCarrinho(List<Venda> compra) {
-		this.compra = compra;
+	public LocalDate getData() {
+		return data;
 	}
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public void setVenda(List<Venda> venda) {
+		this.venda = venda;
+	}
+
 	public Casa getCasa() {
 		return casa;
 	}
@@ -99,12 +100,7 @@ public class Evento {
 	public void setCapacidade(Integer capacidade) {
 		this.capacidade = capacidade;
 	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
-	}
+	
 	public BigDecimal getValor() {
 		return valor;
 	} 
