@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +34,7 @@ public class EventoResource {
 
 	@Autowired
 	private EventoService eventosService;
-
+	
 	@ApiOperation("Lista os eventos cadastrados.")
 	@GetMapping
 	public ResponseEntity<List<Evento>> Listar() { 
