@@ -17,6 +17,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -47,7 +49,7 @@ public class Evento {
 	@ApiModelProperty(value="Quantidade máxima de pessoas que cabem no evento",example="1000")
 	private Integer capacidade;
 	
-	@JsonFormat(pattern="dd/MM/yyyy")
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
 	@NotNull
 	@Future
 	@ApiModelProperty(value="Data em que acontecerá o evento",example="02/02/2022")

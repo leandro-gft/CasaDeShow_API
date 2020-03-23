@@ -43,7 +43,7 @@ public class CasaService {
 			}
 		} else {
 			if (casa.getNomeCasa() != null) {
-				Casa b = casasRepository.findByNomeCasa(casa.getNomeCasa());
+				List<Casa> b = casasRepository.findByNomeCasaContaining(casa.getNomeCasa());
 				if (b != null) // se a for diferente de null, significa que foi encontrado no banco, ou seja,
 								// já existe
 				{
@@ -64,8 +64,8 @@ public class CasaService {
 		return casa;
 	}
 
-	public Casa buscarPorNome(String nomeCasa) {
-		Casa casa = casasRepository.findByNomeCasa(nomeCasa);
+	public List<Casa> buscarPorNome(String nomeCasa) {
+		List<Casa> casa =  casasRepository.findByNomeCasaContaining(nomeCasa);
 
 		if (casa == null) {
 			throw new EmptyResultDataAccessException(1);

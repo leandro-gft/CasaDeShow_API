@@ -1,6 +1,7 @@
 package br.com.gft.casadeshowapi.resource;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -86,10 +87,10 @@ public class CasaResource {
 	
 	@ApiOperation("Busca uma casa de show de acordo com seu nome.")
 	@GetMapping("/nome/{nomeCasa}")
-	public ResponseEntity<Casa> buscarPorNome(@ApiParam(value="Nome de uma casa de show", example="Teatro") @PathVariable("nomeCasa")String nomeCasa){
+	public ResponseEntity<List<Casa>> buscarPorNome(@ApiParam(value="Nome de uma casa de show", example="Teatro") @PathVariable("nomeCasa")String nomeCasa){
 //		Casa casa = casasService.buscar(id); 
 //		return ResponseEntity.status(HttpStatus.OK).body(casa);
-		return ResponseEntity.status(HttpStatus.OK).body(casasService.buscarPorNome(nomeCasa));
+		return ResponseEntity.status(HttpStatus.OK).body((casasService.buscarPorNome(nomeCasa)));
 		
 	}
 	

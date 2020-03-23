@@ -69,10 +69,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/api/users").permitAll()
 			.antMatchers(HttpMethod.GET, "/api/eventos").permitAll()
 			.antMatchers("/swagger-ui.html").permitAll()
-			.antMatchers(HttpMethod.POST, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.POST, "/api/casas/**", "/api/eventos/**").permitAll()
 			.antMatchers(HttpMethod.PUT, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.GET, "/api/casas/**", "/api/users/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.DELETE, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.GET, "/api/vendas/**", "/api/casas/**", "/api/users/**").permitAll()
+			.antMatchers(HttpMethod.DELETE, "/api/casas/**", "/api/eventos/**").permitAll()
 			.anyRequest().authenticated() //qualquer requisição precisa esta autenticada
 			.and()
 				.httpBasic();//métood basico de autenticação
