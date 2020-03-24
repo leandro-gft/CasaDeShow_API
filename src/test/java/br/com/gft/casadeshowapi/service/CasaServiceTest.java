@@ -2,6 +2,7 @@ package br.com.gft.casadeshowapi.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
@@ -10,11 +11,18 @@ import io.restassured.http.ContentType;
 import static org.hamcrest.Matchers.*;
 
 import org.json.simple.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import br.com.gft.casadeshowapi.domain.Casa;
 
@@ -25,8 +33,37 @@ public class CasaServiceTest {
 	private String uri = "http://casadeshowapi.herokuapp.com/api/casas";
 
 	@Autowired
+	public WebApplicationContext context;
+	
+	
+	private MockMvc mvc;
+
+	@Autowired
 	private CasaService service;
 
+	@Before
+	public void setup () {
+		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+	}
+	
+	@Test
+	public void naoDeveCadastrarCasaRepetida() throws Exception {
+		this.mvc.perform(MockMvcRequestBuilders.post("/api/casas")
+				.content("{\"nomeCasa\":\"Maracanã\",\"localCasa\":\"Rio de Janeiro\"}")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isConflict());		
+	}
+	
+	@Test
+	public void testeRequisicaoPostSucesso() throws Exception {
+		this.mvc.perform(MockMvcRequestBuilders.post("/api/casas")
+				.content("{\"nomeCasa\":\"Teste\",\"localCasa\":\"Rio de Janeiro\"}")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isCreated());		
+	}
+	
+	
+	
 	@Test
 	public void deveMostrarOTamanhoDaListaDeCasasDeShow() {
 		List<Casa> casas = service.listar();
@@ -78,12 +115,7 @@ public class CasaServiceTest {
 		given().when().then().statusCode(400);
 	}
 	
-	@Test
-	public void naoDeveCadastrarCasaRepetida() {
-		Casa casa = new Casa("Maracanã", "Rio de Janeiro");
-		service.salvar(casa);
-		given().when().then().statusCode(400);
-	}
+
 	
 //	@Test
 //	public void deveValidarOPrimeiroDaListaEmOrdemDecrescente() {
