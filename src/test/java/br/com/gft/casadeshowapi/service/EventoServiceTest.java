@@ -64,6 +64,7 @@ public class EventoServiceTest {
 		//RequestEntity<Void> request = RequestEntity.get(URI.create("http://localhost:8080/api/casas/")).header("Authorization", "Basic TGVhbmRybzoxMjM=").build();
 		List<Evento> eventos = service.capacidadeDesc();
 		assertEquals(eventos.get(0).getNomeEvento(), "Show do Queen");
+		
 	}
 	
 	@Test

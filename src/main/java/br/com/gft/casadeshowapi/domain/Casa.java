@@ -88,5 +88,12 @@ public class Casa {
 		return true;
 	}
 	
+	public Casa () {}
+	
+	public Casa (String nomeCasa, String localCasa) {
+		this.nomeCasa = nomeCasa;
+		this.localCasa = localCasa; 
+		
+	}
 	
 }

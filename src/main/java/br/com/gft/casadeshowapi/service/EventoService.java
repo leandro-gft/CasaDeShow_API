@@ -82,7 +82,7 @@ public class EventoService {
 		try {
 			eventosRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EmptyResultDataAccessException(1);
+			throw new EmptyResultDataAccessException("O evento não pôde ser encontrado", 1);
 		}
 	}
 

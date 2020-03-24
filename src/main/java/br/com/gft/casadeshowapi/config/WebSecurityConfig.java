@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/swagger-ui.html").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/casas/**", "/api/eventos/**").permitAll()
 			.antMatchers(HttpMethod.PUT, "/api/casas/**", "/api/eventos/**").hasAuthority("ADMIN")
-			.antMatchers(HttpMethod.GET, "/api/vendas/**", "/api/casas/**", "/api/users/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/vendas/**", "/api/casas/**", "/api/users/**").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.DELETE, "/api/casas/**", "/api/eventos/**").permitAll()
 			.anyRequest().authenticated() //qualquer requisição precisa esta autenticada
 			.and()

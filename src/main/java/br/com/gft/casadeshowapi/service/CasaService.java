@@ -43,7 +43,7 @@ public class CasaService {
 			}
 		} else {
 			if (casa.getNomeCasa() != null) {
-				List<Casa> b = casasRepository.findByNomeCasaContaining(casa.getNomeCasa());
+				Casa b = casasRepository.findByNomeCasa(casa.getNomeCasa());
 				if (b != null) // se a for diferente de null, significa que foi encontrado no banco, ou seja,
 								// já existe
 				{
@@ -51,7 +51,9 @@ public class CasaService {
 				}
 			}
 		}
+			
 		return casasRepository.save(casa);
+	
 	}
 
 	public Casa buscar(Long id) {
@@ -79,7 +81,7 @@ public class CasaService {
 		try {
 			casasRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new CasaNaoEncontradaException("A casa de show não pôde ser encontrado.");
+			throw new EmptyResultDataAccessException("A casa de show não pôde ser encontrada", 1);
 		}
 	}
 
